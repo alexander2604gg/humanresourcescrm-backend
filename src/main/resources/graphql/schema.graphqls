@@ -1,0 +1,23 @@
+type Mutation {
+    createUser(input : CreateUserInput!): UserLogged
+}
+type Query {
+    getUserById(id: Int!): User
+}
+
+type UserLogged {
+    userId : Int
+    email : String
+    jwt : String
+}
+
+type User {
+    userId : Int
+    email : String
+    enabled : Boolean
+}
+
+input CreateUserInput {
+    email: String!
+    password: String!
+}
