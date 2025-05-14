@@ -3,11 +3,14 @@ package com.startup.humanresourcescrm.service.impl;
 import com.startup.humanresourcescrm.dto.entity.EntityCompanyCreateDto;
 import com.startup.humanresourcescrm.dto.entity.EntityPersonCreateDto;
 import com.startup.humanresourcescrm.dto.user.UserCreateDto;
+import com.startup.humanresourcescrm.dto.user.UserEntityCreateDto;
 import com.startup.humanresourcescrm.dto.user.UserResponseDto;
 import com.startup.humanresourcescrm.entity.BaseEntity;
 import com.startup.humanresourcescrm.entity.UserSec;
 import com.startup.humanresourcescrm.enums.EntityType;
+import com.startup.humanresourcescrm.factory.UserCreateDtoFactory;
 import com.startup.humanresourcescrm.mapper.EntityMapper;
+import com.startup.humanresourcescrm.mapper.UserMapper;
 import com.startup.humanresourcescrm.repository.BaseEntityRepository;
 import com.startup.humanresourcescrm.service.BaseEntityService;
 import com.startup.humanresourcescrm.service.UserService;
@@ -24,14 +27,15 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     private final BaseEntityRepository baseEntityRepository;
     private final EntityMapper entityMapper;
     private final EmailServiceImpl emailService;
+    private final UserCreateDtoFactory userCreateDtoFactory;
 
     @Override
     public void saveEntityCompany(EntityCompanyCreateDto entityCompanyCreateDto) {
         BaseEntity baseEntity = entityMapper.toEntityFromCompanyCreateDto(entityCompanyCreateDto);
         baseEntity.setEntityType(EntityType.COMPANY);
-        UserCreateDto userCreateDto = entityCompanyCreateDto.getUserCreateDto();
+        UserEntityCreateDto userEntityCreateDto = entityCompanyCreateDto.getUserEntityCreateDto();
         String password = entityCompanyCreateDto.getRuc();
-        userCreateDto.setPassword(password);
+        UserCreateDto userCreateDto = userCreateDtoFactory.fromUserEntityCreateDto(userEntityCreateDto, password);
         UserResponseDto userResponseDto = userService.save(userCreateDto);
         UserSec userSec = UserSec.builder()
                 .userId(userResponseDto.getUserId())
@@ -45,9 +49,9 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     public void saveEntityPersona(EntityPersonCreateDto entityPersonCreateDto) {
         BaseEntity baseEntity = entityMapper.toEntityFromPersonCreateDto(entityPersonCreateDto);
         baseEntity.setEntityType(EntityType.PERSON);
-        UserCreateDto userCreateDto = entityPersonCreateDto.getUserCreateDto();
+        UserEntityCreateDto userEntityCreateDto = entityPersonCreateDto.getUserEntityCreateDto();
         String password = entityPersonCreateDto.getDni();
-        userCreateDto.setPassword(password);
+        UserCreateDto userCreateDto = userCreateDtoFactory.fromUserEntityCreateDto(userEntityCreateDto, password);
         UserResponseDto userResponseDto = userService.save(userCreateDto);
         UserSec userSec = UserSec.builder()
                 .userId(userResponseDto.getUserId())

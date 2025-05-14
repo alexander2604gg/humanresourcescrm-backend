@@ -38,10 +38,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> authorityList = new HashSet<>();
 
         userSec.getRoles()
-                .forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRol().getName()))));
+                .forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRole().getName()))));
 
         userSec.getRoles().stream()
-                .flatMap(role-> role.getRol().getPermissions().stream())
+                .flatMap(role-> role.getRole().getPermissions().stream())
                 .forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getPermission().getName())));
 
         return new User(userSec.getEmail() , userSec.getPassword() , userSec.isEnabled() ,true,
