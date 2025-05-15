@@ -15,7 +15,7 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idBaseEntity;
     @Enumerated(EnumType.STRING)
     private EntityType entityType;
     private String firstName;
