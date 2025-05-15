@@ -16,5 +16,5 @@ public interface PermissionMapper {
     @Mapping(target = "permissionId" , source = "permission.permissionId")
     @Mapping(target = "name" , source = "permission.name")
     PermissionResponseDto toPermissionResponseDto (RolePermission rolePermission);
-    List<PermissionResponseDto> toPermissionResponseDtoList(List<Permission> permission);
+    List<PermissionResponseDto> toPermissionResponseDtoList(List<RolePermission> permission);
 }

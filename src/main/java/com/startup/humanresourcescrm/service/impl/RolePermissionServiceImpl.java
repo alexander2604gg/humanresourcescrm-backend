@@ -46,13 +46,4 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
         rolePermissionRepository.saveAll(rolePermissions);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Set<Permission> getPermissionsByRole(Role role) {
-        return rolePermissionRepository.findByRole(role)
-                .stream()
-                .map(RolePermission::getPermission)
-                .collect(Collectors.toSet());
-    }
 }

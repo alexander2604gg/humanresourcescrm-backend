@@ -44,13 +44,4 @@ public class UserRoleServiceImpl implements UserRoleService {
 
         userRoleRepository.saveAll(userRoles);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Set<Role> getPermissionsByUser(UserSec userSec) {
-        return userRoleRepository.findByUserSec(userSec)
-                .stream()
-                .map(UserRole::getRole)
-                .collect(Collectors.toSet());
-    }
 }

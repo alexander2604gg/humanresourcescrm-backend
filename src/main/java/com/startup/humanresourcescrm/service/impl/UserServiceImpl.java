@@ -41,15 +41,7 @@ public class UserServiceImpl implements UserService {
 
     public List<UserResponseDto> findAll() {
         List<UserSec> users = userRepository.findAll();
-        return users.stream()
-                .map(userSec -> {
-                    UserResponseDto userResponseDto = userMapper.toUserLoggedDto(userSec);
-
-                    Set<Role> roles = userRoleService.getPermissionsByUser(userSec);
-                    userResponseDto.setRoles(roles);
-                    return userResponseDto;
-                })
-                .toList();
+        return userMapper.toUserSecResponseDtoList(users);
     }
 
     public String encryptPassword(String password) {

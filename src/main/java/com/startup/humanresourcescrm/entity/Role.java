@@ -21,4 +21,6 @@ public class Role {
     private String name;
     @OneToMany(mappedBy = "role")
     List<RolePermission> permissions;
+    @OneToMany(mappedBy = "role")
+    List<UserRole> roles;
 }
