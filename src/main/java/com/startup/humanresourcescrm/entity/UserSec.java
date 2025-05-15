@@ -23,6 +23,6 @@ public class UserSec {
     private String password;
     private boolean enabled;
     @OneToMany(mappedBy = "userSec")
-    Set<UserRol> roles;
+    Set<UserRole> roles;
 
 }

@@ -2,13 +2,17 @@ package com.startup.humanresourcescrm.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Embeddable
-public class RolPermissionKey implements Serializable{
-    @Column(name = "rol_id")
-    Long rolId;
+@NoArgsConstructor
+@AllArgsConstructor
+public class RolePermissionKey implements Serializable{
+    @Column(name = "role_id")
+    Long roleId;
     @Column(name = "permission_id")
     Long permissionId;
 }

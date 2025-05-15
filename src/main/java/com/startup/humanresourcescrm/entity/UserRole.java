@@ -7,19 +7,20 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "Rol_Permission")
+@Table(name = "User_Role")
 @NoArgsConstructor
 @AllArgsConstructor
-public class RolPermission {
+public class UserRole {
     @EmbeddedId
-    RolPermissionKey id;
-    @ManyToOne
-    @MapsId("rolId")
-    @JoinColumn(name = "rol_id")
-    Rol rol;
+    UserRoleKey id;
 
     @ManyToOne
-    @MapsId("permissionId")
-    @JoinColumn(name = "permission_id")
-    Permission permission;
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
+    UserSec userSec;
+
+    @ManyToOne
+    @MapsId("roleId")
+    @JoinColumn(name = "role_id")
+    Role role;
 }
