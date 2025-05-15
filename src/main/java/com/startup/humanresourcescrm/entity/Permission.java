@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "Permission")
@@ -16,4 +18,6 @@ public class Permission {
     private Long permissionId;
     @Column(unique = true , nullable = false)
     private String name;
+    @OneToMany(mappedBy = "permission")
+    List<RolePermission> permissions;
 }

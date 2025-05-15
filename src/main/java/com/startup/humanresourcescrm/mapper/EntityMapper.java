@@ -11,12 +11,12 @@ public interface EntityMapper {
 
     @Mapping(target = "dni", ignore = true)
     @Mapping(target = "entityType" , ignore = true)
-    @Mapping(target = "id" , ignore = true)
+    @Mapping(target = "idBaseEntity" , ignore = true)
     @Mapping(target = "firstName" , ignore = true)
     @Mapping(target = "lastName" , ignore = true)
     @Mapping(target = "userSec" , ignore = true)
     BaseEntity toEntityFromCompanyCreateDto (EntityCompanyCreateDto entityCompanyCreateDto);
-    @Mapping(target = "id" , ignore = true)
+    @Mapping(target = "idBaseEntity" , ignore = true)
     @Mapping(target = "businessName" , ignore = true)
     @Mapping(target = "entityType" , ignore = true)
     @Mapping(target = "ruc" , ignore = true)

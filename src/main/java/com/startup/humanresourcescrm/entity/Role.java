@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,5 +20,5 @@ public class Role {
     private Long roleId;
     private String name;
     @OneToMany(mappedBy = "role")
-    Set<RolePermission> permissions;
+    List<RolePermission> permissions;
 }
