@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class RequestCreateDto {
     private Long entityId;
-    List<PersonToInvestigateCreateDto> personsToInvestigate;
+    // List<PersonToInvestigateCreateDto> personsToInvestigate;
 }

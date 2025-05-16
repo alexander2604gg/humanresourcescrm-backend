@@ -2,7 +2,6 @@ package com.startup.humanresourcescrm.service.impl;
 
 import com.startup.humanresourcescrm.dto.role.RoleCreateDto;
 import com.startup.humanresourcescrm.dto.role.RoleResponseDto;
-import com.startup.humanresourcescrm.entity.Permission;
 import com.startup.humanresourcescrm.entity.Role;
 import com.startup.humanresourcescrm.mapper.RoleMapper;
 import com.startup.humanresourcescrm.repository.RoleRepository;

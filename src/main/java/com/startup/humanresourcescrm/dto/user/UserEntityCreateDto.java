@@ -7,5 +7,4 @@ import java.util.List;
 @Data
 public class UserEntityCreateDto {
     private String email;
-    private List<Integer> roleIds;
 }

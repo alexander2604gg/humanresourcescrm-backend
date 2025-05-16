@@ -6,6 +6,11 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.startup.humanresourcescrm.entity.BaseEntity;
+import com.startup.humanresourcescrm.entity.UserSec;
+import com.startup.humanresourcescrm.repository.BaseEntityRepository;
+import com.startup.humanresourcescrm.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,15 +23,30 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
-    @Value("${security.jwt.private.key}")
-    private String privateKey;
-    @Value("${security.jwt.user.generator}")
-    private String userGenerator;
+    private final String privateKey;
+    private final String userGenerator;
+    private final UserRepository userRepository;
+    private final BaseEntityRepository baseEntityRepository;
 
+    public JwtUtil(
+            @Value("${security.jwt.private.key}") String privateKey,
+            @Value("${security.jwt.user.generator}") String userGenerator,
+            UserRepository userRepository,
+            BaseEntityRepository baseEntityRepository) {
+        this.privateKey = privateKey;
+        this.userGenerator = userGenerator;
+        this.userRepository = userRepository;
+        this.baseEntityRepository = baseEntityRepository;
+    }
     public String createToken (Authentication authentication){
 
         Algorithm algorithm = Algorithm.HMAC256(privateKey);
-        String userName = authentication.getPrincipal().toString();
+        String raw = authentication.getPrincipal().toString();
+        String email = raw.substring(raw.indexOf("Username=") + 9, raw.indexOf(", Password="));
+
+        UserSec userSec = userRepository.getByEmail(email);
+        BaseEntity baseEntity = baseEntityRepository.getByUserSec(userSec);
+        Long entityId = (baseEntity != null) ? baseEntity.getIdBaseEntity() : 0L;
 
         String authorities = authentication.getAuthorities()
                 .stream()
@@ -35,7 +55,8 @@ public class JwtUtil {
 
         return JWT.create()
                 .withIssuer(this.userGenerator)
-                .withSubject(userName)
+                .withSubject(raw)
+                .withClaim("entityId", entityId)
                 .withClaim("authorities" , authorities)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + (30*60000)))

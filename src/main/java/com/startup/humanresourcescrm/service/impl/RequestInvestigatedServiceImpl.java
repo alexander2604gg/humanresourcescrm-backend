@@ -1,7 +1,7 @@
 package com.startup.humanresourcescrm.service.impl;
 
 import com.startup.humanresourcescrm.dto.requestinvestigated.RequestCreateDto;
-import com.startup.humanresourcescrm.entity.PersonInvestigated;
+import com.startup.humanresourcescrm.dto.requestinvestigated.RequestResponseDto;
 import com.startup.humanresourcescrm.entity.RequestInvestigated;
 import com.startup.humanresourcescrm.mapper.PersonInvestigatedMapper;
 import com.startup.humanresourcescrm.mapper.RequestInvestigatedMapper;
@@ -23,10 +23,15 @@ public class RequestInvestigatedServiceImpl implements RequestInvestigatedServic
     @Override
     public void create(RequestCreateDto requestCreateDto) {
         RequestInvestigated requestInvestigated = requestInvestigatedMapper.toEntityFromCreate(requestCreateDto);
-        List<PersonInvestigated> personInvestigatedList = personInvestigatedMapper.toEntityListFromCreate(requestCreateDto.getPersonsToInvestigate());
+        // List<PersonInvestigated> personInvestigatedList = personInvestigatedMapper.toEntityListFromCreate(requestCreateDto.getPersonsToInvestigate());
         RequestInvestigated requestInvestigatedRegistered = requestInvestigatedRepository.save(requestInvestigated);
-        for (PersonInvestigated personInvestigated : personInvestigatedList){
-            personInvestigated.setRequestInvestigated(requestInvestigatedRegistered);
-        }
+        // for (PersonInvestigated personInvestigated : personInvestigatedList){
+        //     personInvestigated.setRequestInvestigated(requestInvestigatedRegistered);
+        // }
+    }
+
+    public List<RequestResponseDto> findAll() {
+        List<RequestInvestigated> requests = requestInvestigatedRepository.findAll();
+        return requestInvestigatedMapper.toRequestResponseDtoList(requests);
     }
 }
